@@ -41,7 +41,7 @@ public enum ElementAround {
         	}		
 		}
 		
-		String type = ElementRevealTypes.getElementByNumber(matriz[line][column]);
+		String type = ElementRevealTypes.getElementType(matriz[line][column]);
 		ElementReveal element = new ElementReveal(type, bombsAround);
 		return element;
 	}

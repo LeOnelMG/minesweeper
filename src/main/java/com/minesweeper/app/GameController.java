@@ -12,7 +12,8 @@ public class GameController {
 	}
 	
 	public Game startNewGame(int GAMELOOP, GameScanner gameScanner) {
-		gameInProgress = new Game(GAMELOOP, new Board(GAMELOOP), gameScanner);
+		Board board = new Board(new StandardRules(GAMELOOP));
+		gameInProgress = new Game(GAMELOOP, board, gameScanner);
 		return gameInProgress;
 	}
 	

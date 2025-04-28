@@ -24,7 +24,7 @@ public enum ElementRevealTypes {
 		return this.elementName;
 	}
 	
-	public static String getElementByNumber(int element) {
+	public static String getElementType(int element) {
 		List<ElementRevealTypes> elements = List.of(ElementRevealTypes.values());
 		Optional<ElementRevealTypes> elementFound = elements.stream().filter(s -> element == s.getNumber()).findFirst();
 		return elementFound.get().getName();
