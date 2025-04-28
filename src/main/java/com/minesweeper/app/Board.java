@@ -2,11 +2,12 @@ package com.minesweeper.app;
 
 import com.minesweeper.app.ElementAround.ElementReveal;
 
-public class Board extends Rules {
+public class Board {
 	private String[][] matriz = new String[8][14];
+	IRules rules;
 	
-	public Board(final int GAMELOOP) {
-		super(GAMELOOP);
+	public Board(IRules rules) {
+		this.rules = rules;
 		this.insertBoardValue();
     }
 	
@@ -28,7 +29,7 @@ public class Board extends Rules {
 	}
 	
 	public ElementReveal revealElement(int line, int column) {
-		ElementReveal element = ElementAround.verifyAround(line, column, getMatrizRules());
+		ElementReveal element = ElementAround.verifyAround(line, column, rules.getRulesValues());
 	    this.matriz[line][column] = Integer.toString(element.bombsAround());
 	    if(element.type() == "EMPTY" && element.bombsAround() == 0) {
 	    	revealElementsAround(line, column);

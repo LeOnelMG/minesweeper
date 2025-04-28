@@ -1,13 +1,13 @@
 package com.minesweeper.app;
 
-public class Rules {
+public class StandardRules implements IRules {
 	private Integer[][] matriz = new Integer[8][14];
 	
-	public Rules(final int GAMELOOP) {
-		this.insertMines(GAMELOOP);
+	public StandardRules(final int gameLoop) {
+		this.insertMines(gameLoop);
 	}
 	
-	public Integer[][] getMatrizRules() {
+	public Integer[][] getRulesValues() {
 		return this.matriz;
 	}
 	
@@ -15,19 +15,19 @@ public class Rules {
 		return matriz[line][column];
 	}
 	
-	public void insertMines(int gameLoop) {
+	public void insertMines(int seed) {
 		for(int i = 0; i < 8; i++) {
 			for(int j = 0; j < 14; j++) {
-				int randomNumber = getTwoStartingNumbers(generateRandomNumber(gameLoop));
+				int randomNumber = getTwoStartingNumbers(generateRandomNumber(seed));
 				boolean cousin = isCousin(randomNumber);
 			    if(cousin) {
 					this.matriz[i][j] = 0;
 				} else {
 					this.matriz[i][j] = 1;
 				}
-			    gameLoop++;
+			    seed++;
 			}
-			gameLoop++;
+			seed++;
 		}
 		
 //		for(int i = 0; i < 8; i++) {
