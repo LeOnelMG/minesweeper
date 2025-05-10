@@ -29,7 +29,7 @@ public class Board {
 	}
 	
 	public ElementReveal revealElement(int line, int column) {
-		ElementReveal element = ElementAround.verifyAround(line, column, rules.getRulesValues());
+		ElementReveal element = ElementAround.getElementProperties(line, column, rules.getRulesValues());
 	    this.matriz[line][column] = Integer.toString(element.bombsAround());
 	    if(element.type() == "EMPTY" && element.bombsAround() == 0) {
 	    	revealElementsAround(line, column);

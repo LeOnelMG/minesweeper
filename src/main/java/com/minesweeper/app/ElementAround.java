@@ -31,19 +31,22 @@ public enum ElementAround {
 		return this.column;
 	}
 	
-	public static ElementReveal verifyAround(int line, int column, Integer[][] matriz) {
-        int bombsAround = 0;
-		
+	public static ElementReveal getElementProperties(int line, int column, Integer[][] matriz) {
+        int bombsAround = countBombsAround(line, column, matriz);
+		String type = ElementRevealTypes.getElementType(matriz[line][column]);
+		ElementReveal element = new ElementReveal(type, bombsAround);
+		return element;
+	}
+	
+	public static int countBombsAround(int line, int column, Integer[][] matriz) {
+		int bombsAround = 0;
 		for(ElementAround element: ElementAround.values()) {
 			int findedElement = exceedsMatrizLimit(line + element.line, column + element.column, matriz) ? 2 : matriz[line + element.line][column + element.column];
 			if(findedElement == 0) {
         		bombsAround++;
         	}		
 		}
-		
-		String type = ElementRevealTypes.getElementType(matriz[line][column]);
-		ElementReveal element = new ElementReveal(type, bombsAround);
-		return element;
+		return bombsAround;
 	}
 	
 	public static <T> boolean exceedsMatrizLimit(int line, int column, T[][] matriz) {
@@ -51,7 +54,6 @@ public enum ElementAround {
 			return true;
 		}
 		return false;
-		
 	}
 	
 	record ElementReveal(String type, int bombsAround) {}
