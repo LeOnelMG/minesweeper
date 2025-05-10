@@ -1,23 +1,27 @@
 package com.minesweeper.app;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GameController {
-	private List<Game> games = new ArrayList<Game>();
-	private Game gameInProgress;
+	private Game currentGame;
+	private GameMetrics gameMetrics;
 	
-	public Game getGameInProgress() {
-		return gameInProgress;
+	GameController(GameMetrics gameMetrics){
+		this.gameMetrics = gameMetrics;
+	}
+	
+	public Game getCurrentGame() {
+		return currentGame;
 	}
 	
 	public Game startNewGame(int GAMELOOP, GameScanner gameScanner) {
-		Board board = new Board(new StandardRules(GAMELOOP));
-		gameInProgress = new Game(GAMELOOP, board, gameScanner);
-		return gameInProgress;
+		currentGame = new Game(
+				GAMELOOP, 
+				new Board(new StandardRules(GAMELOOP)), 
+				gameScanner
+		);
+		return currentGame;
 	}
 	
-	public void saveCurrentGame(Game game) {
-		games.add(game);
+	public void exitGame() {
+		gameMetrics.setGameMetrics(currentGame);
 	}
 }

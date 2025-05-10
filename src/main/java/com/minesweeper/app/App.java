@@ -7,22 +7,29 @@ public class App {
     	boolean exit = false;
     	int GAMELOOP = 1;
     	GameScanner gameScanner = new GameScanner(new Scanner(System.in));
-    	GameController gameController = new GameController();
+    	GameMetrics gameMetrics = new GameMetrics();
+    	GameController gameController = new GameController(gameMetrics);
+    	String player_option = "";
     	
     	do {
     		
-    		System.out.println("------Minesweeper-------");
-			System.out.println("Start game - start | Check score - score");
-			
+    		if(!player_option.equals("restart")) {
+    		    System.out.println("------Minesweeper-------");
+			    System.out.println("Start game - start | Check score - score");
+    		}
+    		
+    		if(gameController.getCurrentGame() != null) {
+    			gameController.exitGame();
+    		}
 			gameController.startNewGame(GAMELOOP, gameScanner);
-			gameScanner.isRestart();
+			player_option = player_option.equals("restart") ? "start" : gameScanner.scanner.nextLine();
 			
-			switch(gameScanner.status.toLowerCase()) {
+			switch(player_option) {
 			      case "start":
-			    	  gameScanner.setStatus(gameController.getGameInProgress().run());
+			    	  player_option = gameController.getCurrentGame().run();
 				      break;
 			      case "score":
-			    	  System.out.print("EM TESTE");
+			    	  System.out.println("developing");
 			    	  break;
 			}
 			
