@@ -30,11 +30,7 @@ public class Game {
 		System.out.printf("\n------Minesweeper (%s)-------\n", gameMetrics.get(GAMELOOP_ID));
 		System.out.println("Exit game - exit | Start a new game - restart");
 		
-		while(!exit) {
-			
-			setPlay();
-			board.drawerBoardValue();
-			
+		while(!exit && !board.playerWin()) {
 			System.out.println("\nDigite as coordenadas:");
 			gameMetrics.put(SELECTED_OPTION, gameScanner.scanner.nextLine());
 			
@@ -44,11 +40,13 @@ public class Game {
 				return gameMetrics.get(SELECTED_OPTION);
 			}
 			
-			if(!exit) {
+			if(!exit && !board.playerWin()) {
 				try {
+					setPlay();
 					ElementReveal revealElement = board.revealElement(
 							                            gameScanner.formatCoordinates(gameMetrics.get(SELECTED_OPTION)).get(0),
 							                            gameScanner.formatCoordinates(gameMetrics.get(SELECTED_OPTION)).get(1));
+					board.drawerBoardValue();
 					if(revealElement.type() == "BOMB") { 
 						board.drawerBoardValue();
 						gameMetrics.put(STATUS, STATUS_GAME_OVER);
@@ -59,6 +57,12 @@ public class Game {
 				}
 			}
 		}
+		
+		if(board.playerWin()) {
+			gameMetrics.put(STATUS, STATUS_YOU_WIN);
+			return gameMetrics.get(STATUS);
+		}
+		
 		gameMetrics.put(STATUS, STATUS_NOT_FINISHED);
 		return gameMetrics.get(STATUS);
 	}

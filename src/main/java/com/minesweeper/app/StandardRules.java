@@ -1,7 +1,11 @@
 package com.minesweeper.app;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class StandardRules implements IRules {
 	private Integer[][] matriz = new Integer[8][14];
+	private Map<String, String> emptyPositions = new HashMap<>();
 	
 	public StandardRules(final int gameLoop) {
 		this.insertMines(gameLoop);
@@ -24,11 +28,18 @@ public class StandardRules implements IRules {
 					this.matriz[i][j] = 0;
 				} else {
 					this.matriz[i][j] = 1;
+					emptyPositions.put(
+							Integer.toString(i) + Integer.toString(j), 
+							Integer.toString(i) + Integer.toString(j));
 				}
 			    seed++;
 			}
 			seed++;
 		}
+		
+//		for(String position: emptyPositions.values()) {
+//			System.out.println(position);
+//		}
 		
 //		for(int i = 0; i < 8; i++) {
 //			System.out.print((i > 0) ? '\n' : "");
@@ -36,6 +47,16 @@ public class StandardRules implements IRules {
 //				System.out.printf("%d", matriz[i][j]);
 //			}
 //		}
+	}
+	
+	public boolean playerWin(){
+		return emptyPositions.isEmpty();
+	}
+	
+	public void removeFoundPosition(String positionKey) {
+		if(emptyPositions.containsKey(positionKey)) {
+			emptyPositions.remove(positionKey);
+		}
 	}
 	
 	public static int generateRandomNumber(long seed) {
