@@ -27,6 +27,7 @@ public class App {
 			switch(player_option) {
 			      case "start":
 			    	  player_option = gameController.getCurrentGame().run();
+			    	  System.out.println(player_option);
 				      break;
 			      case "score":
 			    	  System.out.println("developing");

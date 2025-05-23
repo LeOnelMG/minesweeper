@@ -28,7 +28,12 @@ public class Board {
 		}
 	}
 	
+	public boolean playerWin() {
+		return rules.playerWin();
+	}
+	
 	public ElementReveal revealElement(int line, int column) {
+		rules.removeFoundPosition(Integer.toString(line) + Integer.toString(column));
 		ElementReveal element = ElementAround.getElementProperties(line, column, rules.getRulesValues());
 	    this.matriz[line][column] = Integer.toString(element.bombsAround());
 	    if(element.type() == "EMPTY" && element.bombsAround() == 0) {
